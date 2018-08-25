@@ -1,0 +1,11 @@
+/* CSS Reset: Ensure consistent default styles across all web browsers. */
+* {
+    padding: 0;
+    margin: 0;
+ }
+
+ #game {
+    background-color: #eee;
+    display: block;
+    margin: 0 auto;
+ }
