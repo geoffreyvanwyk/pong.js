@@ -19,6 +19,15 @@ function drawBall() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
+
+    if (y + dy < 0 || y + dy > canvas.height) {
+        dy = -dy;
+    }
+
+    if (x + dx < 0 || x + dx > canvas.width) {
+        dx = -dx;
+    }
+
     x += dx;
     y += dy;
 }
