@@ -4,6 +4,16 @@ const CTX = CANVAS.getContext('2d');
 let rightPressed = false;
 let leftPressed = false;
 
+let gameStorage = {
+    alerted: false,
+    setItem: function (key, value) {
+        this[key] = value;
+    },
+    getItem: function (key) {
+        return this[key];
+    }
+};
+
 document.addEventListener('keydown', function (event) {
     if (event.keyCode === 39) {
         rightPressed = true;
@@ -48,10 +58,14 @@ function makeBall(position, radius, color) {
                 this.direction.x *= -1;
             }
 
-            if (this.isTouchingRoof(vector) ||
-                this.isTouchingFloor(vector)
-            ) {
+            if (this.isTouchingRoof(vector)) {
                 this.direction.y *= -1;
+            } else if (this.isTouchingFloor(vector)) {
+                if (! gameStorage.getItem('alerted')) {
+                    alert('GAME OVER');
+                    gameStorage.setItem('alerted', true);
+                    document.location.reload();
+                }
             }
 
             this.position.x += this.direction.x * distance.x;
@@ -67,7 +81,7 @@ function makeBall(position, radius, color) {
             return this.position.y + vector.y < this.radius;
         },
         isTouchingFloor: function (vector) {
-            return this.position.y + vector.y > CANVAS.height - this.radius;
+            return this.position.y + vector.y > CANVAS.height + 2 * this.radius;
         }
     };
 }
