@@ -58,7 +58,7 @@ function makeBall(position, radius, color) {
                 this.direction.x *= -1;
             }
 
-            if (this.isTouchingRoof(vector)) {
+            if (this.isTouchingRoof(vector) || this.isTouchingPaddle(vector)) {
                 this.direction.y *= -1;
             } else if (this.isTouchingFloor(vector)) {
                 if (! gameStorage.getItem('alerted')) {
@@ -82,7 +82,13 @@ function makeBall(position, radius, color) {
         },
         isTouchingFloor: function (vector) {
             return this.position.y + vector.y > CANVAS.height + 2 * this.radius;
+        },
+        isTouchingPaddle: function (vector) {
+            return this.position.y + vector.y > CANVAS.height - paddle.height - this.radius
+                && this.position.x + vector.x > paddle.x
+                && this.position.x + vector.x < paddle.x + paddle.width;
         }
+
     };
 }
 
